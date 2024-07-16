@@ -1,5 +1,4 @@
-# forohub
- # ForoHub
+# ForoHub
 
 ForoHub es una API REST desarrollada con Spring Boot que simula el funcionamiento de un foro de discusión, centrándose específicamente en la gestión de tópicos.
 
