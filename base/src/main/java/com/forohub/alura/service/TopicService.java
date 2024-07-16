@@ -83,20 +83,26 @@ public class TopicService {
         topicDTO.setFechaActualizacion(topic.getFechaActualizacion());
         topicDTO.setEstado(topic.getEstado());
         topicDTO.setGenero(topic.getGenero());
-        topicDTO.setUsuarioId(topic.getUsuarioId() == null ? null : topic.getUsuarioId().getId());
+        topicDTO.setUsuarioId(topic.getUsuario() != null ? topic.getUsuario().getId() : null);
         return topicDTO;
     }
+
 
     private Topic mapToEntity(final TopicDTO topicDTO, final Topic topic) {
         topic.setTitulo(topicDTO.getTitulo());
         topic.setMensaje(topicDTO.getMensaje());
-        topic.setFechaCreacion(topicDTO.getFechaCreacion());
-        topic.setFechaActualizacion(topicDTO.getFechaActualizacion());
+
         topic.setEstado(topicDTO.getEstado());
         topic.setGenero(topicDTO.getGenero());
-        final Usuario usuarioId = topicDTO.getUsuarioId() == null ? null : usuarioRepository.findById(topicDTO.getUsuarioId())
-                .orElseThrow(() -> new NotFoundException("usuarioId not found"));
-        topic.setUsuarioId(usuarioId);
+
+        if (topicDTO.getUsuarioId() != null) {
+            Usuario usuario = usuarioRepository.findById(topicDTO.getUsuarioId())
+                  .orElseThrow(() -> new NotFoundException("Usuario not found"));
+            topic.setUsuario(usuario);
+        } else {
+            topic.setUsuario(null);
+        }
+
         return topic;
     }
 

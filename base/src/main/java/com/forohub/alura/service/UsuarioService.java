@@ -64,7 +64,6 @@ public class UsuarioService {
         usuarioDTO.setId(usuario.getId());
         usuarioDTO.setNombre(usuario.getNombre());
         usuarioDTO.setEmail(usuario.getEmail());
-        usuarioDTO.setContrasenia(usuario.getContrasenia());
         usuarioDTO.setFechaCreacion(usuario.getFechaCreacion());
         usuarioDTO.setFechaActualizacion(usuario.getFechaActualizacion());
         usuarioDTO.setEstado(usuario.getEstado());
@@ -72,16 +71,16 @@ public class UsuarioService {
         return usuarioDTO;
     }
 
+
     private Usuario mapToEntity(final UsuarioDTO usuarioDTO, final Usuario usuario) {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setContrasenia(usuarioDTO.getContrasenia());
-        usuario.setFechaCreacion(usuarioDTO.getFechaCreacion());
-        usuario.setFechaActualizacion(usuarioDTO.getFechaActualizacion());
         usuario.setEstado(usuarioDTO.getEstado());
         usuario.setRole(usuarioDTO.getRole());
         return usuario;
     }
+
 
     public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();

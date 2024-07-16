@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +25,13 @@ public class UsuarioResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<UsuarioDTO>> getAllUsuarios() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<UsuarioDTO> getUsuario(@PathVariable(name = "id") final Long id) {
         return ResponseEntity.ok(usuarioService.get(id));
     }
@@ -47,6 +50,7 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> deleteUsuario(@PathVariable(name = "id") final Long id) {
         final ReferencedWarning referencedWarning = usuarioService.getReferencedWarning(id);
         if (referencedWarning != null) {

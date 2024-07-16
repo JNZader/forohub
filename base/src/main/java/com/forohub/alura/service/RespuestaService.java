@@ -73,23 +73,32 @@ public class RespuestaService {
         respuestaDTO.setFechaCreacion(respuesta.getFechaCreacion());
         respuestaDTO.setFechaActualizacion(respuesta.getFechaActualizacion());
         respuestaDTO.setEstado(respuesta.getEstado());
-        respuestaDTO.setUsuarioId(respuesta.getUsuarioId() == null ? null : respuesta.getUsuarioId().getId());
-        respuestaDTO.setTopic(respuesta.getTopic() == null ? null : respuesta.getTopic().getId());
+        respuestaDTO.setUsuarioId(respuesta.getUsuario() != null ? respuesta.getUsuario().getId() : null);
+        respuestaDTO.setTopic(respuesta.getTopic() != null ? respuesta.getTopic().getId() : null);
         return respuestaDTO;
     }
 
     private Respuesta mapToEntity(final RespuestaDTO respuestaDTO, final Respuesta respuesta) {
         respuesta.setMensajeRespuesta(respuestaDTO.getMensajeRespuesta());
-        respuesta.setFechaCreacion(respuestaDTO.getFechaCreacion());
-        respuesta.setFechaActualizacion(respuestaDTO.getFechaActualizacion());
         respuesta.setEstado(respuestaDTO.getEstado());
-        final Usuario usuarioId = respuestaDTO.getUsuarioId() == null ? null : usuarioRepository.findById(respuestaDTO.getUsuarioId())
-                .orElseThrow(() -> new NotFoundException("usuarioId not found"));
-        respuesta.setUsuarioId(usuarioId);
-        final Topic topic = respuestaDTO.getTopic() == null ? null : topicRepository.findById(respuestaDTO.getTopic())
-              .orElseThrow(() -> new NotFoundException("topic not found"));
-        respuesta.setTopic(topic);
+
+
+        if (respuestaDTO.getUsuarioId() != null) {
+            Usuario usuario = usuarioRepository.findById(respuestaDTO.getUsuarioId())
+                  .orElseThrow(() -> new NotFoundException("Usuario not found"));
+            respuesta.setUsuario(usuario);
+        } else {
+            respuesta.setUsuario(null);
+        }
+
+        if (respuestaDTO.getTopic() != null) {
+            Topic topic = topicRepository.findById(respuestaDTO.getTopic())
+                  .orElseThrow(() -> new NotFoundException("Topic not found"));
+            respuesta.setTopic(topic);
+        } else {
+            respuesta.setTopic(null);
+        }
+
         return respuesta;
     }
-
 }

@@ -6,13 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
-
 @Entity
-@Table(name = "Topics")
+@Table(name = "topics")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,22 +31,23 @@ public class Topic {
     @Column(nullable = false, length = 2550)
     private String mensaje;
 
-    @Column
-    private LocalTime fechaCreacion;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime fechaCreacion;
 
+    @UpdateTimestamp
     @Column
-    private LocalTime fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(columnDefinition = "tinyint", length = 1)
     private Boolean estado;
 
-    @Column
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuarioId;
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "topic")
     private Set<Respuesta> respuestas;

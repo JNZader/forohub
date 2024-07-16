@@ -1,11 +1,10 @@
 package com.forohub.alura.model;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,21 +12,24 @@ public class UsuarioDTO {
 
     private Long id;
 
+    @Pattern(regexp = "^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$", message = "El nombre solo puede contener letras y espacios.")
     @Size(max = 50)
     private String nombre;
 
+    @Email
     @Size(max = 100)
     private String email;
 
-    @Size(max = 255)
+    @NotBlank
+    @Size(min = 8, max = 255)
     private String contrasenia;
 
-    private LocalTime fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
-    private LocalTime fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
+    @NotNull
     private Boolean estado;
 
     private Role role;
-
 }

@@ -5,8 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,9 +21,9 @@ public class TopicDTO {
     @Size(max = 2550)
     private String mensaje;
 
-    private LocalTime fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
-    private LocalTime fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     private Boolean estado;
 

@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Respuestas")
+@Table(name = "respuestas")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,21 +26,22 @@ public class Respuesta {
     @Column(nullable = false)
     private String mensajeRespuesta;
 
-    @Column
-    private LocalTime fechaCreacion;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime fechaCreacion;
 
+    @UpdateTimestamp
     @Column
-    private LocalTime fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(columnDefinition = "tinyint", length = 1)
     private Boolean estado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuarioId;
+    private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
     private Topic topic;
-
 }
